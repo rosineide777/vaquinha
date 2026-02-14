@@ -910,7 +910,9 @@ valorBtns.forEach(btn => {
       qrCodeImg.style.display = 'none'; 
       qrText.textContent = 'Gerando QR Code... Ele aparecerá automaticamente!'; 
       
-// FORÇA O ATRASO MÍNIMO (MUDANÇA PARA 1000ms)
+// CÓDIGO FINAL PARA SUBSTITUIR O BLOCO EXISTENTE DENTRO DA FUNÇÃO setTimeout NO index.html
+// (Inicia na linha 825)
+// ...
 setTimeout(() => {
     
     loadingModal.style.display = 'none'; // Fecha o modal
@@ -921,20 +923,48 @@ setTimeout(() => {
     qrCodeImg.style.display = 'block'; 
     qrText.textContent = `QR Code PIX gerado para R$${valor}. Escaneie a imagem.`;
 
-    // >>> LINHA DE CÓDIGO CRUCIAL PARA RASTREAMENTO:
+    // >>> RASTREAMENTO DO GOOGLE (JÁ EXISTE)
     gtag('event', 'pix_gerado');
 
-}, 3000); // Fica 1 segundo visível
+    // >>> NOVO: RASTREAMENTO DO META PIXEL (CONVERSÃO DE COMPRA/DOAÇÃO)
+    // Dispara o evento 'Purchase' (Compra/Doação) enviando o valor da doação.
+    fbq('track', 'Purchase', {
+        value: parseFloat(valor), // Envia o valor escolhido (Ex: 15.00)
+        currency: 'BRL', // Define a moeda (Real Brasileiro)
+        content_name: 'Doacao PIX'
+    });
+    // <<< FIM DO NOVO RASTREAMENTO META PIXEL
+
+}, 3000); // Fica 3 segundos visível (tempo de carregamento)
+// ...
 
     } else {
       // Caso não haja URL para o valor
       qrText.textContent = `QR Code para R$${valor} não disponível.`;
       qrCodeImg.style.display = 'none';
-      document.body.style.overflow = ''; 
+      document.body.style.overflow = ''; pa
     }
   });
 });
 </script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '660767670160154');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=660767670160154&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17649842006"></script>
 <script>
