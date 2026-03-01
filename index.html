@@ -591,6 +591,33 @@ header {
   </div>
 </section>
 
+<div class="card" style="text-align: center; margin-bottom: 30px; border: 2px solid #114c21; padding: 20px;">
+  <h3 style="margin-bottom: 10px; font-size: 20px;">Meta da Campanha</h3>
+  
+  <div style="width: 100%; background: #e0e0e0; border-radius: 20px; height: 25px; margin: 15px 0; overflow: hidden; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);">
+    <div id="barra-preenchimento" style="width: 0%; height: 100%; background: linear-gradient(90deg, #27ae60, #00c050); transition: width 2s ease-in-out;"></div>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; font-weight: bold; font-size: 18px;">
+    
+    <div style="width: 100%; display: flex; justify-content: space-between; flex-wrap: wrap;">
+        <div style="text-align: left; min-width: 140px;">
+            <small style="display: block; color: #666; font-size: 12px; text-transform: uppercase;">Arrecadado</small><b>
+            <span id="valor-arrecadado" style="color: #114c21; font-size: 1.1em;">R$ 0,00</span>
+        </div>
+        
+        <div style="text-align: right; min-width: 140px;">
+            <small style="display: block; color: #666; font-size: 12px; text-transform: uppercase;">Meta</small>
+            <span style="color: #444; font-size: 1.1em;">R$ 5.000.000,00</span>
+        </div>
+    </div>
+
+  </div>
+  <p style="font-size: 14px; margin-top: 15px; color: #555; font-style: italic; border-top: 1px solid #eee; padding-top: 10px;">
+      Cada gesto faz a diferença para quem perdeu tudo. ❤️
+  </p>
+</div>
+
 <h1>Faça sua doação de forma simples e rápida seguindo os passos abaixo:</h1>
       <!-- PIX info abaixo do texto -->
       <div class="pix-info" style="margin-top: 40px;">
@@ -654,7 +681,7 @@ header {
         <div class="depoimento-item" style="display: flex;">
           <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Foto da Maria" />
           <div>
-            <p>"Desde que comecei a doar, sinto que estou ajudando diretamente a salvar vidas. A Fundação da Tia Rosa é uma esperança."</p>
+            <p>"Desde que comecei a doar, sinto que estou ajudando diretamente a salvar vidas. A Fundação da Tia Rosa é uma esperança para esses animais."</p>
             <p><strong>- Maria A.</strong></p>
           </div>
         </div>
@@ -662,7 +689,7 @@ header {
         <div class="depoimento-item" style="display:none;">
           <img src="https://randomuser.me/api/portraits/men/36.jpg" alt="Foto do João" />
           <div>
-            <p>"Admiro o trabalho incrível que fazem. Cada doação é um passo para dar um futuro melhor."</p>
+            <p>"Admiro o trabalho incrível que fazem. Cada doação é um passo para dar um futuro melhor aos animais."</p>
             <p><strong>- João P.</strong></p>
           </div>
         </div>
@@ -702,7 +729,7 @@ header {
         <div class="depoimento-item" style="display:none;">
           <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Foto da Laura" />
           <div>
-            <p>"Doar é uma forma de amor. Estou feliz em contribuir para um futuro melhor."</p>
+            <p>"Doar é uma forma de amor. Estou feliz em contribuir para um futuro melhor para esses animais."</p>
             <p><strong>- Laura F.</strong></p>
           </div>
         </div>
@@ -862,6 +889,29 @@ header {
     }, 2000);
   }
 
+// ====== Lógica da Barra de Progresso Atualizada (Sem %) ======
+function atualizarProgressoVaquinha() {
+    const meta = 5000000; 
+    const arrecadado = 1468650.87; 
+    
+    // Cálculo da proporção para a barra
+    const proporcao = (arrecadado / meta) * 100;
+    
+    // 1. Atualiza apenas a largura da barra (sem texto de %)
+    const barra = document.getElementById('barra-preenchimento');
+    barra.style.width = proporcao + "%";
+    
+    // 2. Atualiza o texto do valor arrecadado
+    const textoValor = document.getElementById('valor-arrecadado');
+    textoValor.innerText = arrecadado.toLocaleString('pt-BR', { 
+        style: 'currency', 
+        currency: 'BRL' 
+    });
+}
+
+// Inicia a animação ao carregar
+window.addEventListener('load', atualizarProgressoVaquinha);
+
   // Eventos para os botões copiar PIX
   document.getElementById('btn-copiar-pix').addEventListener('click', () => {
     copiarTexto(document.getElementById('pix-key').textContent);
@@ -980,6 +1030,5 @@ src="https://www.facebook.com/tr?id=660767670160154&ev=PageView&noscript=1"
 </head>
 </body>
 </html>
-
 
 
